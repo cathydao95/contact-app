@@ -21,7 +21,6 @@ const CreateContact = () => {
 
   const addContact = async (e) => {
     e.preventDefault();
-    console.log("testing");
     try {
       const result = await fetch("http://localhost:8080/api/v1/contacts", {
         method: "POST",

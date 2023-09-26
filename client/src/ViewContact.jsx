@@ -27,7 +27,6 @@ const ViewContact = () => {
     });
   };
 
-  // console.log(contactInfo, "IINFOO");
   useEffect(() => {
     getSingleContact();
   }, []);
@@ -77,6 +76,11 @@ const ViewContact = () => {
     } catch (error) {}
   };
 
+  const getInitials = (name) => {
+    let arr = name.split(" ");
+    return `${arr[0][0]} ${arr[1][0]}`;
+  };
+
   return (
     contact !== undefined && (
       <div className="contactContainer">
@@ -92,7 +96,7 @@ const ViewContact = () => {
             </div>
             <div>
               <div className="contactImg">
-                {/* <div className="img">{getInitials(name)}</div> */}
+                <div className="img">{getInitials(contactInfo.name)}</div>
               </div>
               <div className="nameText">{contact.name}</div>
               <div className="infoContainer">
@@ -123,7 +127,7 @@ const ViewContact = () => {
             </div>
             <div>
               <div className="contactImg">
-                {/* {!isEditing && <div className="img">{getInitials(name)}</div>} */}
+                <div className="img">{getInitials(contactInfo.name)}</div>
               </div>
               <form className="form">
                 <div className="formInfo">

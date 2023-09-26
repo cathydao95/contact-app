@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import App from "./App.jsx";
 import ViewContact from "./ViewContact.jsx";
+import CreateContact from "./CreateContact.jsx";
 import "./index.css";
 
 const router = createBrowserRouter([
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
     errorElement: <h1>Error</h1>,
+  },
+  {
+    path: "create",
+    element: <CreateContact />,
   },
   {
     path: ":id",

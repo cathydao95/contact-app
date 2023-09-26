@@ -5,6 +5,7 @@ body {
 
 a {
   text-decoration: none;
+  color: black;
 }
 .navbar {
   background-color: rgb(105, 128, 159);
@@ -28,6 +29,7 @@ a {
   margin: 1rem 0.5rem;
   padding: 0 0.5rem;
   font-size: 2rem;
+  text-align: center;
 }
 
 .block {

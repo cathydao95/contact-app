@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
+import FormInput from "./FormInput";
+import InfoRow from "./InfoRow";
 
 const ViewContact = () => {
   const { id } = useParams();
@@ -78,7 +80,11 @@ const ViewContact = () => {
 
   const getInitials = (name) => {
     let arr = name.split(" ");
-    return `${arr[0][0]} ${arr[1][0]}`;
+    if (arr.length > 1) {
+      return `${arr[0][0]} ${arr[1][0]}`;
+    } else {
+      return `${arr[0][0]}`;
+    }
   };
 
   return (
@@ -100,18 +106,9 @@ const ViewContact = () => {
               </div>
               <div className="nameText">{contact.name}</div>
               <div className="infoContainer">
-                <div className="info">
-                  <p>mobile</p>
-                  <p className="infoText">{contact.phone}</p>
-                </div>
-                <div className="info">
-                  <p>email</p>
-                  <p className="infoText">{contact.email}</p>
-                </div>
-                <div className="info notes">
-                  <p>Notes</p>
-                  <p className="infoText">{contact.notes}</p>
-                </div>
+                <InfoRow title="phone" value={contact.phone} />
+                <InfoRow title="email" value={contact.email} />
+                <InfoRow title="notes" value={contact.notes} />
               </div>
             </div>
           </div>
@@ -130,39 +127,21 @@ const ViewContact = () => {
                 <div className="img">{getInitials(contactInfo.name)}</div>
               </div>
               <form className="form">
-                <div className="formInfo">
-                  <input
-                    className="formInput"
-                    type="text"
-                    placeholder="name"
-                    value={contactInfo.name}
-                    name="name"
-                    autoComplete="off"
-                    onChange={(e) => handleInput(e)}
-                  />
-                </div>
-                <div className="formInfo">
-                  <input
-                    className="formInput"
-                    type="text"
-                    placeholder="phone"
-                    value={contactInfo.phone}
-                    name="phone"
-                    autoComplete="off"
-                    onChange={(e) => handleInput(e)}
-                  />
-                </div>
-                <div className="formInfo">
-                  <input
-                    className="formInput"
-                    type="text"
-                    placeholder="email"
-                    value={contactInfo.email}
-                    name="email"
-                    autoComplete="off"
-                    onChange={(e) => handleInput(e)}
-                  />
-                </div>
+                <FormInput
+                  name="name"
+                  value={contactInfo.name}
+                  onChange={(e) => handleInput(e)}
+                />
+                <FormInput
+                  name="phone"
+                  value={contactInfo.phone}
+                  onChange={(e) => handleInput(e)}
+                />
+                <FormInput
+                  name="email"
+                  value={contactInfo.email}
+                  onChange={(e) => handleInput(e)}
+                />
                 <div className="formInfo">
                   <textarea
                     className="formInput"

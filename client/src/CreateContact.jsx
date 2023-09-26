@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import FormInput from "./FormInput";
 
 const CreateContact = () => {
   const [newContactInfo, setNewContactInfo] = useState({});
@@ -11,7 +12,6 @@ const CreateContact = () => {
     });
   };
 
-  console.log(newContactInfo);
   const cancelInput = (e) => {
     e.preventDefault();
     setNewContactInfo({ name: "", email: "", phone: "", notes: "" });
@@ -53,39 +53,22 @@ const CreateContact = () => {
         </div>
       </div>
       <form className="form">
-        <div className="formInfo">
-          <input
-            className="formInput"
-            type="text"
-            placeholder="name"
-            value={newContactInfo.name}
-            name="name"
-            autoComplete="off"
-            onChange={(e) => handleInput(e)}
-          />
-        </div>
-        <div className="formInfo">
-          <input
-            className="formInput"
-            type="text"
-            placeholder="phone"
-            value={newContactInfo.phone}
-            name="phone"
-            autoComplete="off"
-            onChange={(e) => handleInput(e)}
-          />
-        </div>
-        <div className="formInfo">
-          <input
-            className="formInput"
-            type="text"
-            placeholder="email"
-            value={newContactInfo.email}
-            name="email"
-            autoComplete="off"
-            onChange={(e) => handleInput(e)}
-          />
-        </div>
+        <FormInput
+          name="name"
+          value={newContactInfo.name}
+          onChange={(e) => handleInput(e)}
+        />
+        <FormInput
+          name="phone"
+          value={newContactInfo.phone}
+          onChange={(e) => handleInput(e)}
+        />
+        <FormInput
+          name="email"
+          value={newContactInfo.email}
+          onChange={(e) => handleInput(e)}
+        />
+
         <div className="formInfo">
           <textarea
             className="formInput"

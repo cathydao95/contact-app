@@ -6,7 +6,9 @@ const Home = () => {
     <div>
       <nav className="navbar">
         <h1 className="title">All Contacts</h1>
-        <Link to="/create">+</Link>
+        <Link to="/create" className="addBtn">
+          +
+        </Link>
       </nav>
       <div className="block"></div>
       <div>

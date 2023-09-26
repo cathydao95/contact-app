@@ -3,12 +3,23 @@ import { Link } from "react-router-dom";
 
 const Contacts = () => {
   const [contacts, setContacts] = useState();
+
   const getContacts = async () => {
-    let results = await fetch("http://localhost:8080/api/v1/contacts");
-    let {
-      data: { contacts },
-    } = await results.json();
-    setContacts(contacts);
+    try {
+      let response = await fetch("http://localhost:8080/api/v1/contacts");
+
+      if (response.ok) {
+        let {
+          data: { contacts },
+        } = await response.json();
+        setContacts(contacts);
+      } else {
+        throw new Error("Network response was not ok");
+      }
+    } catch (error) {
+      console.error("Error occurred while fetching contacts", error);
+      throw error;
+    }
   };
 
   useEffect(() => {

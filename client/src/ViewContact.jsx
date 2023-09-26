@@ -14,11 +14,11 @@ const ViewContact = () => {
   const [isEditing, setIsEditing] = useState(false);
 
   const getSingleContact = async () => {
-    const result = await fetch(`http://localhost:8080/api/v1/contacts/${id}`);
+    const response = await fetch(`http://localhost:8080/api/v1/contacts/${id}`);
 
     const {
       data: { contact },
-    } = await result.json();
+    } = await response.json();
 
     setContact(contact[0]);
     setContactInfo({
@@ -42,7 +42,7 @@ const ViewContact = () => {
   const updateContact = async (e, id) => {
     e.preventDefault();
     try {
-      const result = await fetch(
+      const response = await fetch(
         `http://localhost:8080/api/v1/contacts/${id}`,
         {
           method: "PUT",
@@ -53,18 +53,25 @@ const ViewContact = () => {
         }
       );
 
-      const {
-        data: { updatedContact },
-      } = await result.json();
-      setContact(updatedContact[0]);
-      setIsEditing(false);
-    } catch (error) {}
+      if (response.ok) {
+        const {
+          data: { updatedContact },
+        } = await response.json();
+        setContact(updatedContact[0]);
+        setIsEditing(false);
+      } else {
+        throw new Error("Network response was not ok");
+      }
+    } catch (error) {
+      console.error("Error occurred while updating contact", error);
+      throw error;
+    }
   };
 
   const deleteContact = async (e, id) => {
     e.preventDefault();
     try {
-      const result = await fetch(
+      const response = await fetch(
         `http://localhost:8080/api/v1/contacts/${id}`,
         {
           method: "DELETE",
@@ -73,9 +80,16 @@ const ViewContact = () => {
           },
         }
       );
-      const data = await result.json();
-      navigate("/");
-    } catch (error) {}
+      if (response.ok) {
+        const data = await response.json();
+        navigate("/");
+      } else {
+        throw new Error("Network response was not ok");
+      }
+    } catch (error) {
+      console.error("Error occurred while deleting contact", error);
+      throw error;
+    }
   };
 
   const getInitials = (name) => {

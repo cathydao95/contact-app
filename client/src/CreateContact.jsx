@@ -22,18 +22,25 @@ const CreateContact = () => {
   const addContact = async (e) => {
     e.preventDefault();
     try {
-      const result = await fetch("http://localhost:8080/api/v1/contacts", {
+      const response = await fetch("http://localhost:8080/api/v1/contacts", {
         method: "POST",
         headers: {
           "Content-type": "application/JSON",
         },
         body: JSON.stringify(newContactInfo),
       });
-      const {
-        data: { newContact },
-      } = await result.json();
-      navigate(`/${newContact[0].id}`);
-    } catch (error) {}
+      if (response.ok) {
+        const {
+          data: { newContact },
+        } = await response.json();
+        navigate(`/${newContact[0].id}`);
+      } else {
+        throw new Error("Network response was not ok");
+      }
+    } catch (error) {
+      console.error("Error occurred while creating contact", error);
+      throw error;
+    }
   };
 
   return (

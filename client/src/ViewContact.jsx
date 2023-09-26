@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 
 const ViewContact = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [contact, setContact] = useState();
 
@@ -55,13 +56,25 @@ const ViewContact = () => {
         data: { updatedContact },
       } = await result.json();
       setContact(updatedContact[0]);
+      setIsEditing(false);
     } catch (error) {}
   };
 
-  const deleteContact = (e) => {
+  const deleteContact = async (e, id) => {
     e.preventDefault();
     try {
-    } catch {}
+      const result = await fetch(
+        `http://localhost:8080/api/v1/contacts/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-type": "application/JSON",
+          },
+        }
+      );
+      const data = await result.json();
+      navigate("/");
+    } catch (error) {}
   };
 
   return (
@@ -157,7 +170,12 @@ const ViewContact = () => {
                     onChange={(e) => handleInput(e)}
                   />
                 </div>
-                <button className="deleteBtn">Delete Contact</button>
+                <button
+                  className="deleteBtn"
+                  onClick={(e) => deleteContact(e, id)}
+                >
+                  Delete Contact
+                </button>
               </form>
             </div>
           </div>

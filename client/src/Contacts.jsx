@@ -30,7 +30,7 @@ const Contacts = () => {
     contacts && (
       <div>
         {contacts.map((contact) => {
-          const { id, name, email, phone, notes } = contact;
+          const { id, name } = contact;
           return (
             <div key={id} className="contactRow">
               <Link to={`/${id}`}>{name}</Link>

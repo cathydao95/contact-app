@@ -3,7 +3,28 @@ import { useNavigate } from "react-router-dom";
 import FormInput from "./FormInput";
 
 const CreateContact = () => {
-  const [newContactInfo, setNewContactInfo] = useState({});
+  const [newContactInfo, setNewContactInfo] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    notes: "",
+  });
+
+  const [errors, setErrors] = useState({});
+
+  const validateFields = () => {
+    const { name, phone } = newContactInfo;
+    const errors = {};
+    if (!name) {
+      errors.name = "Please enter contact's name";
+    }
+
+    if (!phone) {
+      errors.phone = "Please enter contact's phone number";
+    }
+
+    return errors;
+  };
 
   const navigate = useNavigate();
   const handleInput = (e) => {
@@ -21,6 +42,15 @@ const CreateContact = () => {
 
   const addContact = async (e) => {
     e.preventDefault();
+    // Check if there are validation errors
+    const validationErrors = validateFields();
+    // Use object.keys to turn object into an array and check length of keys
+    let validationKeys = Object.keys(validationErrors);
+    // If length greater than 0, there are validation errors
+    if (validationKeys.length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
     try {
       const response = await fetch("http://localhost:8080/api/v1/contacts", {
         method: "POST",
@@ -63,16 +93,22 @@ const CreateContact = () => {
           name="name"
           value={newContactInfo.name}
           onChange={(e) => handleInput(e)}
+          error={errors.name}
+          // Add required to name field
+          required
         />
         <FormInput
           name="phone"
           value={newContactInfo.phone}
           onChange={(e) => handleInput(e)}
+          error={errors.name}
         />
         <FormInput
           name="email"
           value={newContactInfo.email}
           onChange={(e) => handleInput(e)}
+          // Add required to email field
+          required
         />
 
         <div className="formInfo">

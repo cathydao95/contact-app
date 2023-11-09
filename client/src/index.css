@@ -145,3 +145,7 @@ textarea {
 .deleteBtn:hover {
   color: grey;
 }
+
+.error {
+  color: red;
+}

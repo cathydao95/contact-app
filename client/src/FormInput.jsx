@@ -1,8 +1,9 @@
 import React from "react";
 
-const FormInput = ({ name, value, onChange }) => {
+const FormInput = ({ name, value, onChange, error }) => {
   return (
     <div className="formInfo">
+      {error && <p className="error">{error}</p>}
       <input
         className="formInput"
         type="text"
@@ -11,6 +12,7 @@ const FormInput = ({ name, value, onChange }) => {
         name={name}
         autoComplete="off"
         onChange={onChange}
+        required
       />
     </div>
   );
